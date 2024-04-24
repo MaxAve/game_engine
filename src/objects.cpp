@@ -23,7 +23,7 @@ objects::GameObject::GameObject(std::string obj_name)
 objects::GameObject::~GameObject()
 {
     objects::loaded_objects.erase(name);
-    debug::info("Destroyed object. %i objects still active.\n", objects::loaded_objects.size());
+    debug::info("Destroyed object. %i objects still active.", objects::loaded_objects.size());
 }
 
 int objects::GameObject::get_layer()
@@ -47,13 +47,13 @@ objects::GameObject *objects::GameObject::get_object_by_name(std::string name)
     {
         return objects::loaded_objects.at(name);
     }
-    debug::warn("Could not find GameObject named '%s'\n", name.c_str());
+    debug::warn("Could not find GameObject named '%s'", name.c_str());
     return nullptr;
 }
 
-std::vector<objects::GameObject *> objects::GameObject::get_objects_by_tag(std::string tag)
+std::vector<objects::GameObject*> objects::GameObject::get_objects_by_tag(std::string tag)
 {
-    std::vector<objects::GameObject *> objs;
+    std::vector<objects::GameObject*> objs;
     for(auto& obj_ls_pair : objects::loaded_objects)
     {
         auto tag_index_find = std::find(obj_ls_pair.second->tags.begin(), obj_ls_pair.second->tags.end(), tag); 
@@ -74,4 +74,16 @@ void objects::GameObject::set_layer(int new_layer)
 void objects::delete_object(std::string name)
 {
     delete objects::GameObject::get_object_by_name(name);
+}
+
+void objects::GameObject::set_texture(std::string texture)
+{
+    if(textures::loaded_textures.find(texture) == textures::loaded_textures.end())
+    {
+        debug::warn("Could not find texture named '%s'", texture.c_str());
+    }
+    else
+    {
+        this->sprite.setTexture(textures::loaded_textures.at(texture));
+    }
 }

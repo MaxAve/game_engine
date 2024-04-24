@@ -6,7 +6,7 @@ void debug::info(const char *format, ...)
 {
     if(debug::show_debug_info)
     {
-        std::string debug_msg = "[INFO] " + std::string(format);
+        std::string debug_msg = "[INFO] " + std::string(format) + "\n";
         va_list args;
         va_start(args, format);
         std::vprintf(debug_msg.c_str(), args);
@@ -18,7 +18,7 @@ void debug::warn(const char *format, ...)
 {
     if(debug::show_debug_info)
     {
-        std::string debug_msg = "\033[93m[WARN] " + std::string(format);
+        std::string debug_msg = "\033[93m[WARN] " + std::string(format) + "\033[0m\n";
         va_list args;
         va_start(args, format);
         std::vprintf(debug_msg.c_str(), args);

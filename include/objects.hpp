@@ -7,6 +7,7 @@
 #include <sstream>
 #include <bits/stdc++.h>
 #include "debug.hpp"
+#include "textures.hpp"
 
 namespace objects
 {
@@ -25,11 +26,20 @@ public:
     bool shown; // Set to false to hide object (object's state will remain as is but will no longer be rendered).
     bool scene_persistent; // If set to true, the object will not be deleted before a scene change.
 
+    sf::Sprite sprite;
+
     int get_layer();
 
     std::string get_name();
 
     std::vector<std::string> get_tags();
+
+    /**
+     * Sets new layer (objects with higher layer values will be rendered over objects with lower ones)
+    */
+    void set_layer(int new_layer);
+
+    void set_texture(std::string texture);
 
     /**
      * Returns pointer to GameObject with the given name
@@ -40,11 +50,6 @@ public:
      * Returns a vector of pointers to every GameObject with a given tag
     */
     static std::vector<GameObject*> get_objects_by_tag(std::string tag);
-
-    /**
-     * Sets new layer (objects with higher layer values will be rendered over objects with lower ones)
-    */
-    void set_layer(int new_layer);
 
     GameObject(std::string obj_name);
     ~GameObject();
